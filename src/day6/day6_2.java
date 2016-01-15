@@ -1,8 +1,7 @@
-package task6;
+package day6;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 
 /**
  -- Part Two ---
@@ -25,11 +24,11 @@ import java.lang.reflect.Array;
  toggle 0,0 through 999,999 would increase the total brightness by 2000000.
 
  */
-public class task6_2 {
+public class day6_2 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = task6_1.class.getClassLoader().getResource("input6.txt").getFile();
+        String inputFile = day6_1.class.getClassLoader().getResource("input6.txt").getFile();
 
         int[][] array = new int[1000][1000];
         for (int i = 0; i < array.length; i++) {

@@ -1,4 +1,4 @@
-package task1;
+package day1;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,11 +16,11 @@ import java.io.FileReader;
  What is the position of the character that causes Santa to first enter the basement?
 
  */
-public class task1_2 {
+public class day1_2 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = task1_2.class.getClassLoader().getResource("input1.txt").getFile();
+        String inputFile = day1_2.class.getClassLoader().getResource("input1.txt").getFile();
 
         BufferedReader in = new BufferedReader(new FileReader(inputFile));
         int sum = 0;

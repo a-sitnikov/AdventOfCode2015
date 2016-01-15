@@ -1,4 +1,4 @@
-package task1;
+package day1;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,11 +29,11 @@ import java.io.FileReader;
  To what floor do the instructions take Santa?
 
  */
-public class task1_1 {
+public class day1_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = task1_1.class.getClassLoader().getResource("input1.txt").getFile();
+        String inputFile = day1_1.class.getClassLoader().getResource("input1.txt").getFile();
 
         BufferedReader in = new BufferedReader(new FileReader(inputFile));
         int sum = 0;

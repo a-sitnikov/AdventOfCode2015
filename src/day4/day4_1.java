@@ -1,7 +1,4 @@
-package task4;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
+package day4;
 
 /**
  --- Day 4: The Ideal Stocking Stuffer ---
@@ -25,7 +22,7 @@ import java.security.MessageDigest;
  make an MD5 hash starting with five zeroes is 1048970; that is, the
  MD5 hash of pqrstuv1048970 looks like 000006136ef....
  */
-public class task4_1 {
+public class day4_1 {
 
     public static void main(String[] args) throws Exception {
 

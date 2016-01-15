@@ -1,4 +1,4 @@
-package task5;
+package day5;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -25,11 +25,11 @@ import java.io.FileReader;
  How many strings are nice?
 
  */
-public class task5_1 {
+public class day5_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = task5_1.class.getClassLoader().getResource("input5.txt").getFile();
+        String inputFile = day5_1.class.getClassLoader().getResource("input5.txt").getFile();
 
         BufferedReader in = new BufferedReader(new FileReader(inputFile));
         String s;

@@ -1,4 +1,4 @@
-package task5;
+package day5;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,11 +24,11 @@ import java.io.FileReader;
 
 
  */
-public class task5_2 {
+public class day5_2 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = task5_2.class.getClassLoader().getResource("input5.txt").getFile();
+        String inputFile = day5_2.class.getClassLoader().getResource("input5.txt").getFile();
 
         BufferedReader in = new BufferedReader(new FileReader(inputFile));
         String s;

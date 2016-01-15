@@ -1,8 +1,7 @@
-package task6;
+package day6;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 
 /**
  --- Day 6: Probably a Fire Hazard ---
@@ -24,11 +23,11 @@ import java.lang.reflect.Array;
  After following the instructions, how many lights are lit?
 
  */
-public class task6_1 {
+public class day6_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = task6_1.class.getClassLoader().getResource("input6.txt").getFile();
+        String inputFile = day6_1.class.getClassLoader().getResource("input6.txt").getFile();
 
         int[][] array = new int[1000][1000];
         for (int i = 0; i < array.length; i++) {
