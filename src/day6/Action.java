@@ -1,6 +1,6 @@
 package day6;
 
-public class Action {
+public class  Action {
     int x1;
     int y1;
     int x2;
