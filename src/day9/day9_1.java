@@ -2,8 +2,8 @@ package day9;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  --- Day 9: All in a Single Night ---
@@ -46,7 +46,6 @@ public class day9_1 {
 
         int[][] distanceMap = new int[10][10];
 
-        int sum = 0;
         while ((s = in.readLine()) != null) {
 
             String[] cities = new String[2];
@@ -70,7 +69,7 @@ public class day9_1 {
         int min = 99999999;
         for (int i = 0; i < cityIndex; i++) {
 
-            int totalDist = getShortestWay(distanceMap, i, cityIndex);
+            int totalDist = getShortestRoute(distanceMap, i, cityIndex);
             if (totalDist < min) {
                 min = totalDist;
             }
@@ -81,9 +80,46 @@ public class day9_1 {
 
     }
 
-    public static int getShortestWay(int[][] distanceMap, int firstPoint, int citiesCount) {
+    public static int getShortestRoute(int[][] distanceMap, int firstCity, int citiesCount) {
 
-        return 0;
+        // Dijkstra algorithm
+        HashSet<Integer> set = new HashSet<>();
+
+        int currentCity = firstCity;
+        int nextCity = 0;
+        int totalDist = 0;
+
+        int[] route = new int[citiesCount];
+        route[0] = currentCity;
+
+        set.add(currentCity);
+
+        for (int i = 0; i < citiesCount-1; i++) {
+
+            int min = 99999999;
+
+            for (int j = 0; j < citiesCount; j++) {
+
+                if (currentCity == j) continue;
+                if (set.contains(j)) continue;
+
+                if (distanceMap[currentCity][j] < min) {
+
+                    min = distanceMap[currentCity][j];
+                    nextCity = j;
+                }
+
+            }
+
+            set.add(nextCity);
+            route[i+1] = nextCity;
+            totalDist += min;
+
+            currentCity = nextCity;
+
+        }
+
+        return totalDist;
     }
 
     public static int processString(String str, String[] cities) {
@@ -92,9 +128,7 @@ public class day9_1 {
 
         String[] arr1 = arr[0].split(" to ");
 
-        for (int i = 0; i < cities.length; i++) {
-            cities[i] = arr1[i];
-        }
+        System.arraycopy(arr1, 0, cities, 0, cities.length);
 
         return Integer.valueOf(arr[1]);
     }
