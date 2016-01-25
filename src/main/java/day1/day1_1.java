@@ -1,7 +1,8 @@
-package day1;
+package Day1;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 
 /**
  --- Day 1: Not Quite Lisp ---
@@ -29,32 +30,48 @@ import java.io.FileReader;
  To what floor do the instructions take Santa?
 
  */
-public class day1_1 {
+public class Day1_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day1_1.class.getClassLoader().getResource("input1.txt").getFile();
+        URL resource = Day1_1.class.getClassLoader().getResource("input1.txt");
+        if (resource == null) {
+            return;
+        }
 
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
+
+            int sum = 0;
+
+            String s;
+            while ((s = in.readLine()) != null) {
+
+                sum += processString(s);
+
+            }
+
+            System.out.println(sum);
+        }
+
+    }
+
+    public static int processString(String str) {
+
+        char[] array = str.toCharArray();
         int sum = 0;
 
-        String s;
-        while ((s = in.readLine()) != null) {
+        for (char c: array) {
 
-            char[] array = s.toCharArray();
-            for (char c: array) {
-
-                if (c == '(') {
-                    sum++;
-                } else if (c == ')') {
-                    sum--;
-                }
-
+            if (c == '(') {
+                sum++;
+            } else if (c == ')') {
+                sum--;
             }
 
         }
 
-        System.out.println(sum);
+        return sum;
+
     }
 
 }
