@@ -1,7 +1,5 @@
 package day8;
 
-import day6.Action;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 
