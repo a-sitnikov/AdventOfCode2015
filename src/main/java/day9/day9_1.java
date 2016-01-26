@@ -2,6 +2,7 @@ package day9;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -36,34 +37,39 @@ public class day9_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day9_1.class.getClassLoader().getResource("input9.txt").getFile();
-
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
-        String s;
+        URL resource = day9_1.class.getClassLoader().getResource("input9.txt");
+        if (resource == null) {
+            return;
+        }
 
         HashMap<String, Integer> cityIndexes = new HashMap<>();
         Integer cityIndex = 0;
 
         int[][] distanceMap = new int[10][10];
 
-        while ((s = in.readLine()) != null) {
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
 
-            String[] cities = new String[2];
-            int dist = processString(s, cities);
+            String s;
 
-            for (String city: cities) {
-                if (cityIndexes.get(city) == null) {
-                    cityIndexes.put(city, cityIndex);
-                    cityIndex++;
+            while ((s = in.readLine()) != null) {
+
+                String[] cities = new String[2];
+                int dist = processString(s, cities);
+
+                for (String city : cities) {
+                    if (cityIndexes.get(city) == null) {
+                        cityIndexes.put(city, cityIndex);
+                        cityIndex++;
+                    }
                 }
+
+                int i = cityIndexes.get(cities[0]);
+                int j = cityIndexes.get(cities[1]);
+
+                distanceMap[i][j] = dist;
+                distanceMap[j][i] = dist;
+
             }
-
-            int i = cityIndexes.get(cities[0]);
-            int j = cityIndexes.get(cities[1]);
-
-            distanceMap[i][j] = dist;
-            distanceMap[j][i] = dist;
-
         }
 
         int min = 99999999;

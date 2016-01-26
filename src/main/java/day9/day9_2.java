@@ -2,6 +2,7 @@ package day9;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -20,9 +21,11 @@ public class day9_2 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day9_1.class.getClassLoader().getResource("input9.txt").getFile();
+        URL resource = day9_1.class.getClassLoader().getResource("input9.txt");
+        if (resource == null) {
+            return;
+        }
 
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
         String s;
 
         HashMap<String, Integer> cityIndexes = new HashMap<>();
@@ -30,25 +33,35 @@ public class day9_2 {
 
         int[][] distanceMap = new int[10][10];
 
-        while ((s = in.readLine()) != null) {
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
 
-            String[] cities = new String[2];
-            int dist = processString(s, cities);
+            while ((s = in.readLine()) != null) {
 
-            for (String city: cities) {
-                if (cityIndexes.get(city) == null) {
-                    cityIndexes.put(city, cityIndex);
-                    cityIndex++;
+                String[] cities = new String[2];
+                int dist = processString(s, cities);
+
+                for (String city : cities) {
+                    if (cityIndexes.get(city) == null) {
+                        cityIndexes.put(city, cityIndex);
+                        cityIndex++;
+                    }
                 }
+
+                int i = cityIndexes.get(cities[0]);
+                int j = cityIndexes.get(cities[1]);
+
+                distanceMap[i][j] = dist;
+                distanceMap[j][i] = dist;
+
             }
-
-            int i = cityIndexes.get(cities[0]);
-            int j = cityIndexes.get(cities[1]);
-
-            distanceMap[i][j] = dist;
-            distanceMap[j][i] = dist;
-
         }
+
+        int max = getLongestRoute(distanceMap, cityIndex);
+        System.out.println(max);
+
+    }
+
+    public static int getLongestRoute(int[][] distanceMap, int cityIndex) {
 
         int[] route = new int[cityIndex];
         for (int i = 0; i < route.length; i++) {
@@ -68,8 +81,7 @@ public class day9_2 {
             }
         }
 
-        System.out.println(max);
-
+        return max;
     }
 
     public static boolean getNextRoute(int[] array) {
