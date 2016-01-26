@@ -2,6 +2,7 @@ package day8;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 
 /**
  --- Day 8: Matchsticks ---
@@ -30,20 +31,25 @@ public class day8_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day8_1.class.getClassLoader().getResource("input8.txt").getFile();
-
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
-        int sum = 0;
-        String s;
-        while ((s = in.readLine()) != null) {
-
-            int stringValue = processString(s);
-            sum += stringValue;
-
+        URL resource = day8_1.class.getClassLoader().getResource("input8.txt");
+        if (resource == null) {
+            return;
         }
 
-        System.out.println(sum);
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
 
+            int sum = 0;
+            String s;
+            while ((s = in.readLine()) != null) {
+
+                int stringValue = processString(s);
+                sum += stringValue;
+
+            }
+
+            System.out.println(sum);
+
+        }
     }
 
     public static int processString(String str) {
