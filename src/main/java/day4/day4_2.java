@@ -22,7 +22,7 @@ package day4;
  make an MD5 hash starting with five zeroes is 1048970; that is, the
  MD5 hash of pqrstuv1048970 looks like 000006136ef....
  */
-public class day4_2 {
+public class Day4_2 {
 
     public static void main(String[] args) throws Exception {
 
@@ -32,6 +32,9 @@ public class day4_2 {
         do {
             String message = secretKey + Integer.toString(i);
             String messageMD5 = MD5(message);
+            if (messageMD5 == null) {
+                return;
+            }
             if (messageMD5.substring(0, 6).equals("000000")) {
                 System.out.println("Number: " + i);
                 System.out.println(messageMD5);
