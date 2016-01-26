@@ -1,6 +1,6 @@
-package TestDay2;
+package testDay2;
 
-import Day2.Day2_1;
+import day2.Day2_1;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

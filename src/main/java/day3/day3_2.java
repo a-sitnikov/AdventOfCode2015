@@ -2,6 +2,7 @@ package day3;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,15 +23,29 @@ import java.util.List;
  ^v^v^v^v^v now delivers presents to 11 houses, with Santa going one direction and Robo-Santa going the other.
 
  */
-public class day3_2 {
+public class Day3_2 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day3_2.class.getClassLoader().getResource("input3.txt").getFile();
+        URL resource = Day3_1.class.getClassLoader().getResource("input3.txt");
+        if (resource == null) {
+            return;
+        }
 
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
 
-        HashMap<List<Integer>, Integer> map = new HashMap<>();
+            String s;
+            while ((s = in.readLine()) != null) {
+
+                int value = processString(s);
+                System.out.println(value);
+
+            }
+        }
+
+    }
+
+    public static int processString(String str) {
 
         Integer x1 = 0;
         Integer y1 = 0;
@@ -38,45 +53,40 @@ public class day3_2 {
         Integer x2 = 0;
         Integer y2 = 0;
 
+        HashMap<List<Integer>, Integer> map = new HashMap<>();
         map.put(Arrays.asList(x1, y1), 1);
 
-        String s;
-        while ((s = in.readLine()) != null) {
+        char[] array = str.toCharArray();
+        for (int i = 1; i < array.length; i += 2) {
 
-            char[] array = s.toCharArray();
-            for (int i = 1; i < array.length; i += 2) {
+            char c1 = array[i-1];
+            char c2 = array[i];
 
-                char c1 = array[i-1];
-                char c2 = array[i];
-
-                if (c1 == '<') {
-                    x1--;
-                } else if (c1 == '>') {
-                    x1++;
-                } else if (c1 == '^') {
-                    y1++;
-                } else if (c1 == 'v') {
-                    y1--;
-                }
-
-                map.put(Arrays.asList(x1, y1), 1);
-
-                if (c2 == '<') {
-                    x2--;
-                } else if (c2 == '>') {
-                    x2++;
-                } else if (c2 == '^') {
-                    y2++;
-                } else if (c2 == 'v') {
-                    y2--;
-                }
-
-                map.put(Arrays.asList(x2, y2), 1);
+            if (c1 == '<') {
+                x1--;
+            } else if (c1 == '>') {
+                x1++;
+            } else if (c1 == '^') {
+                y1++;
+            } else if (c1 == 'v') {
+                y1--;
             }
 
+            map.put(Arrays.asList(x1, y1), 1);
+
+            if (c2 == '<') {
+                x2--;
+            } else if (c2 == '>') {
+                x2++;
+            } else if (c2 == '^') {
+                y2++;
+            } else if (c2 == 'v') {
+                y2--;
+            }
+
+            map.put(Arrays.asList(x2, y2), 1);
         }
 
-        System.out.println(map.entrySet().size());
+        return map.entrySet().size();
     }
-
 }

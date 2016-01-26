@@ -2,6 +2,7 @@ package day3;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,48 +23,59 @@ import java.util.List;
  ^v^v^v^v^v delivers a bunch of presents to some very lucky children at only 2 houses.
 
  */
-public class day3_1 {
+public class Day3_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day3_1.class.getClassLoader().getResource("input3.txt").getFile();
+        URL resource = Day3_1.class.getClassLoader().getResource("input3.txt");
+        if (resource == null) {
+            return;
+        }
 
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
 
-        HashMap<List<Integer>, Integer> map  = new HashMap<>();
+            String s;
+            while ((s = in.readLine()) != null) {
 
-        String s;
-        while ((s = in.readLine()) != null) {
-
-            Integer x = 0;
-            Integer y = 0;
-            map.put(Arrays.asList(x, y), 1);
-
-            for (int i = 0; i < s.length(); i++) {
-
-                String s1 = s.substring(i, i+1);
-                switch (s1) {
-                    case "<":
-                        x--;
-                        break;
-                    case ">":
-                        x++;
-                        break;
-                    case "^":
-                        y++;
-                        break;
-                    case "v":
-                        y--;
-                        break;
-                }
-
-                map.put(Arrays.asList(x, y), 1);
+                int value = processString(s);
+                System.out.println(value);
 
             }
 
         }
 
-        System.out.println(map.entrySet().size());
     }
 
+    public static int processString(String str) {
+
+        Integer x = 0;
+        Integer y = 0;
+
+        HashMap<List<Integer>, Integer> map = new HashMap<>();
+        map.put(Arrays.asList(x, y), 1);
+
+        for (int i = 0; i < str.length(); i++) {
+
+            char c = str.charAt(i);
+            switch (c) {
+                case '<':
+                    x--;
+                    break;
+                case '>':
+                    x++;
+                    break;
+                case '^':
+                    y++;
+                    break;
+                case 'v':
+                    y--;
+                    break;
+            }
+
+            map.put(Arrays.asList(x, y), 1);
+
+        }
+
+        return map.entrySet().size();
+    }
 }

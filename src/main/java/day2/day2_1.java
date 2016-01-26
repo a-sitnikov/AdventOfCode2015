@@ -2,6 +2,7 @@ package day2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 import java.util.Arrays;
 
 /**
@@ -19,38 +20,45 @@ import java.util.Arrays;
  All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
 
  */
-public class day2_1 {
+public class Day2_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day2_1.class.getClassLoader().getResource("input2.txt").getFile();
-
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
-        int sum = 0;
-
-        String s;
-        while ((s = in.readLine()) != null) {
-
-            int ind1 = s.indexOf('x');
-            int h = Integer.parseInt(s.substring(0, ind1));
-
-            String s1 = s.substring(ind1+1);
-            int ind2 = s1.indexOf('x');
-
-            int w = Integer.parseInt(s1.substring(0, ind2));
-            int l = Integer.parseInt(s1.substring(ind2+1));
-
-            int[] a = {l*w, w*h, h*l};
-            Arrays.sort(a);
-
-            int p = 2 * (a[0] + a[1] + a[2]);
-
-            sum += p + a[0];
-
-
+        URL resource = Day2_1.class.getClassLoader().getResource("input2.txt");
+        if (resource == null) {
+            return;
         }
 
-        System.out.println(sum);
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
+
+            int sum = 0;
+
+            String s;
+            while ((s = in.readLine()) != null) {
+
+                int p = processString(s);
+                sum += p;
+
+            }
+
+            System.out.println(sum);
+        }
     }
 
+    public static int processString(String str) {
+
+        String[] array = str.split("x");
+
+        int dim[] = new int[3];
+
+        for (int i = 0; i < 3; i++) {
+            dim[i] = Integer.parseInt(array[i]);
+        }
+
+        int[] a = {dim[0]*dim[1], dim[1]*dim[2], dim[2]*dim[0]};
+        Arrays.sort(a);
+
+        return 2 * (a[0] + a[1] + a[2]) + a[0];
+
+    }
 }
