@@ -2,6 +2,7 @@ package day6;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 
 /**
  --- Day 6: Probably a Fire Hazard ---
@@ -23,73 +24,33 @@ import java.io.FileReader;
  After following the instructions, how many lights are lit?
 
  */
-public class day6_1 {
+public class Day6_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day6_1.class.getClassLoader().getResource("input6.txt").getFile();
+        URL resource = Day6_1.class.getClassLoader().getResource("input6.txt");
+        if (resource == null) {
+            return;
+        }
 
-        int[][] array = new int[1000][1000];
-        for (int i = 0; i < array.length; i++) {
+        int[][] grid = new int[1000][1000];
 
-            for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = 0;
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
+
+            String s;
+            while ((s = in.readLine()) != null) {
+
+                Operation op = new Operation(s);//processString(s);
+
+                perfomOperation(grid, op);
+
             }
 
-        }
-
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
-        String s;
-        while ((s = in.readLine()) != null) {
-
-            Action action = processString(s);
-            //System.out.println(s);
-            //System.out.println(action.action + "-" + action.x1 + "," + action.y1 + ":" + action.x2 + "," + action.y2);
-
-            makeAction(array, action);
+            int sum = getSum(grid);
+            System.out.println(sum);
 
         }
 
-        int sum = getSum(array);
-        System.out.println(sum);
-
-    }
-
-    public static Action processString(String str) {
-
-        //turn off 660,55 through 986,197
-        //toggle 322,558 through 977,958
-        //turn on 226,196 through 599,390
-
-        Action action = new Action();
-
-        Integer ind = str.indexOf("through");
-        String s2 = str.substring(ind + 7).trim();
-        int[] arr = getCoords(s2);
-        action.x2 = arr[0];
-        action.y2 = arr[1];
-
-        str = str.substring(0, ind).trim();
-        ind = str.lastIndexOf(" ");
-
-        action.action = str.substring(0, ind).trim();
-        String s1 = str.substring(ind).trim();
-        arr = getCoords(s1);
-        action.x1 = arr[0];
-        action.y1 = arr[1];
-
-        return action;
-
-    }
-
-    public static int[] getCoords(String str) {
-
-        //906,775
-        int ind = str.indexOf(",");
-        String s1 = str.substring(0, ind);
-        String s2 = str.substring(ind+1);
-
-        return new int[]{Integer.valueOf(s1), Integer.valueOf(s2)};
     }
 
     public static int getSum(int[][] array) {
@@ -107,17 +68,17 @@ public class day6_1 {
 
     }
 
-    public static void makeAction(int[][] array, Action action) {
+    public static void perfomOperation(int[][] array, Operation op) {
 
-        for (int i = action.x1; i <= action.x2; i++) {
+        for (int i = op.x1; i <= op.x2; i++) {
 
-            for (int j = action.y1; j <= action.y2 ; j++) {
+            for (int j = op.y1; j <= op.y2 ; j++) {
 
-                if (action.action.equals("toggle")) {
+                if (op.operation.equals("toggle")) {
                     array[i][j] = 1 - array[i][j];
-                } else if (action.action.equals("turn off")) {
+                } else if (op.operation.equals("turn off")) {
                     array[i][j] = 0;
-                }  else if (action.action.equals("turn on")) {
+                }  else if (op.operation.equals("turn on")) {
                     array[i][j] = 1;
                 }
 

@@ -2,6 +2,7 @@ package day5;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 
 /**
  --- Part Two ---
@@ -24,37 +25,39 @@ import java.io.FileReader;
 
 
  */
-public class day5_2 {
+public class Day5_2 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day5_2.class.getClassLoader().getResource("input5.txt").getFile();
-
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
-        String s;
-        int sum = 0;
-        while ((s = in.readLine()) != null) {
-
-            if (isNiceString(s)) {
-                //System.out.println(s);
-                sum++;
-                //break;
-            }
-
+        URL resource = Day5_1.class.getClassLoader().getResource("input5.txt");
+        if (resource == null) {
+            return;
         }
 
-        System.out.println(sum);
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
+
+            String s;
+            int sum = 0;
+            while ((s = in.readLine()) != null) {
+
+                if (isNiceString(s)) {
+                    //System.out.println(s);
+                    sum++;
+                    //break;
+                }
+
+            }
+
+            System.out.println(sum);
+
+        }
 
     }
 
     public static boolean isNiceString(String str) {
 
         char[] charArray = str.toCharArray();
-        if (isContainsDouble(charArray) && isContainsRepeating(charArray)) {
-            return true;
-        } else {
-            return false;
-        }
+        return isContainsDouble(charArray) && isContainsRepeating(charArray);
     }
 
     public static boolean isContainsDouble(char[] charArray) {

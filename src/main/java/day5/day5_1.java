@@ -2,6 +2,7 @@ package day5;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.URL;
 
 /**
  --- Day 5: Doesn't He Have Intern-Elves For This? ---
@@ -25,24 +26,30 @@ import java.io.FileReader;
  How many strings are nice?
 
  */
-public class day5_1 {
+public class Day5_1 {
 
     public static void main(String[] args) throws Exception {
 
-        String inputFile = day5_1.class.getClassLoader().getResource("input5.txt").getFile();
-
-        BufferedReader in = new BufferedReader(new FileReader(inputFile));
-        String s;
-        int sum = 0;
-        while ((s = in.readLine()) != null) {
-
-            if (isNiceString(s)) {
-                sum++;
-            }
-
+        URL resource = Day5_1.class.getClassLoader().getResource("input5.txt");
+        if (resource == null) {
+            return;
         }
 
-        System.out.println(sum);
+        try (BufferedReader in = new BufferedReader(new FileReader(resource.getFile()))) {
+
+            String s;
+            int sum = 0;
+            while ((s = in.readLine()) != null) {
+
+                if (isNiceString(s)) {
+                    sum++;
+                }
+
+            }
+
+            System.out.println(sum);
+
+        }
 
     }
 
@@ -73,30 +80,18 @@ public class day5_1 {
 
         }
 
-        if (numOfVowels >= 3 && isContainsDouble) {
-            return true;
-        } else {
-            return false;
-        }
+        return numOfVowels >= 3 && isContainsDouble;
     }
 
     public static boolean isVowel(char c) {
 
-        if (c == 'a' || c == 'e' || c =='i' || c =='o' || c == 'u') {
-            return true;
-        } else {
-            return false;
-        }
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
 
     }
 
     public static boolean isForbiddenStr(String str) {
 
         // ab, cd, pq, or xy
-        if (str.equals("ab") || str.equals("cd") || str.equals("pq") || str.equals("xy")) {
-            return true;
-        } else {
-            return false;
-        }
+        return str.equals("ab") || str.equals("cd") || str.equals("pq") || str.equals("xy");
     }
 }
