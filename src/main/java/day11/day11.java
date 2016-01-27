@@ -42,7 +42,8 @@ public class day11 {
 
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-        int[] password = new int[str.length()];
+        int[] password = stringToPassword(str, alphabet);
+
         HashSet<Integer> deniedLetters = new HashSet<>();
         deniedLetters.add(alphabet.indexOf('i'));
         deniedLetters.add(alphabet.indexOf('o'));
@@ -64,7 +65,11 @@ public class day11 {
         System.out.println(passwordToString(password, alphabet));
     }
 
-    public static boolean isStrongPassword(int[] password) {
+    public static boolean isStrongPassword(int[] password, HashSet<Integer> deniedLetters) {
+
+        for (int value: password) {
+            if (deniedLetters.contains(value)) return false;
+        }
 
         boolean firstReq = false;
         for (int i = 2; i < password.length; i++) {
@@ -120,15 +125,28 @@ public class day11 {
             i++;
 
             getNextPassword(password, max, deniedLetters);
-            if (isStrongPassword(password)) {
+            if (isStrongPassword(password, deniedLetters)) {
                 break;
             }
 
-            if (i == 1000000) {
+            if (i == 10000000) {
                 break;
             }
 
         }
+
+    }
+
+    public static int[] stringToPassword(String str, String alphabet) {
+
+        int[] password = new int[str.length()];
+
+        for (int i = 0; i < password.length; i++) {
+            char c = str.charAt(i);
+            password[password.length - (i + 1)] = alphabet.indexOf(c);
+        }
+
+        return password;
 
     }
 
