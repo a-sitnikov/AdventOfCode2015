@@ -5,6 +5,7 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  --- Day 12: JSAbacusFramework.io ---
@@ -29,10 +30,18 @@ public class day12_1 {
 
     public static void main(String[] args) throws Exception {
 
-        int sum = 0;
+        URL resource = day12_1.class.getClassLoader().getResource("input12.txt");
+        if (resource == null) {
+            return;
+        }
 
-        String inputFile = day12_1.class.getClassLoader().getResource("input12.txt").getFile();
-        JsonParser jsonParser = new JsonFactory().createJsonParser(new File(inputFile));
+        JsonParser jsonParser = new JsonFactory().createJsonParser(new File(resource.getFile()));
+        System.out.println(getSum(jsonParser));
+    }
+
+    public static int getSum(JsonParser jsonParser) throws Exception  {
+
+        int sum = 0;
 
         JsonToken token;
         while ((token = jsonParser.nextToken()) != null) {
@@ -43,7 +52,7 @@ public class day12_1 {
 
         }
 
-        System.out.println(sum);
-    }
+        return sum;
 
+    }
 }

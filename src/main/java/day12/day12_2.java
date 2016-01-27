@@ -11,6 +11,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.TextNode;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  --- Part Two ---
@@ -31,8 +32,12 @@ public class day12_2 {
 
         int sum = 0;
 
-        String inputFile = day12_1.class.getClassLoader().getResource("input12.txt").getFile();
-        JsonParser jsonParser = new JsonFactory().createJsonParser(new File(inputFile));
+        URL resource = day12_1.class.getClassLoader().getResource("input12.txt");
+        if (resource == null) {
+            return;
+        }
+
+        JsonParser jsonParser = new JsonFactory().createJsonParser(new File(resource.getFile()));
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(jsonParser);
