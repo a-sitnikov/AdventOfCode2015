@@ -15,11 +15,16 @@ public class Recipe{
         return getCapacity() * getDurability() * getFlavor() * getTexture();
     }
 
-    public int optimize() {
+    public int optimize(Integer calories) {
 
         ingredientAmount.set(ingredientAmount.size() - 1, getTotalIngredientAmount());
         int max = 0;
         do {
+
+            if (calories != null) {
+                if (getCalories() != calories) continue;
+            }
+
             int value = getScore();
             if (max < value) {
                 max = value;

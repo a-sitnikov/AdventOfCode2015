@@ -59,10 +59,13 @@ public class Day15_1 {
             }
 
             recipe.setTotalIngredientAmount(100);
-            int max = recipe.optimize();
 
+            int max = recipe.optimize(null);
             System.out.println(max);
 
+            System.out.println("day 2");
+            max = recipe.optimize(500);
+            System.out.println(max);
         }
 
     }
